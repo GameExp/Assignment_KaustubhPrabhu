@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Snake3D
 {
     [RequireComponent(typeof(PlayerMovementHandler))]
     [RequireComponent(typeof(PlayerInputManager))]
+    [RequireComponent(typeof(PlayerBodyGrowthOperator))]
     public class PlayerController : MonoBehaviour
     {
 
@@ -18,6 +18,10 @@ namespace Snake3D
         // Growth increase
         [SerializeField]
         private GameObject tailPrefab;
+        private bool createNodeAtTail;
+
+        public static List<Rigidbody> nodes;
+        public bool isAlive;
 
         #endregion
 
@@ -25,6 +29,7 @@ namespace Snake3D
 
         private PlayerMovementHandler movement;
         private PlayerInputManager inputManager;
+        private PlayerBodyGrowthOperator body;
 
         #endregion
 
@@ -32,29 +37,113 @@ namespace Snake3D
 
         void Awake()
         {
+            isAlive = true;
+
             movement = GetComponent<PlayerMovementHandler>();
             inputManager = GetComponent<PlayerInputManager>();
+            body = GetComponent<PlayerBodyGrowthOperator>();
+
+            InitSnakeNodes();
+
+            if (movement == null)
+                return;
+
+            movement.InitPlayer();
         }
 
         void Update()
         {
+            if (!isAlive)
+                return;
+
             if (inputManager == null)
                 return;
 
             GetInput();
+
+
+            // check if we eaten a food and create a new node
+            if (createNodeAtTail)
+            {
+                createNodeAtTail = false;
+                if (body == null)
+                    return;
+
+                // add a new tail to the snake
+                List<Rigidbody> tempNodes = new List<Rigidbody>();
+
+                tempNodes = body.AddTail(tailPrefab, nodes);
+                nodes = tempNodes;
+
+            }
         }
 
         void FixedUpdate()
         {
+            if (!isAlive)
+                return;
+
             if (movement == null)
                 return;
 
             movement.CanMove();
         }
 
+        void OnTriggerEnter(Collider otherCollider)
+        {
+            string colliderTag = otherCollider.tag;
+
+            if(colliderTag.Equals(Tags.FRUIT))
+            {
+                Debug.Log("Ate a fruit");
+
+                GameObject fruitItem = otherCollider.gameObject;
+                if(fruitItem == null)
+                {
+                    Debug.LogError("Wrong assignment of FRUIT Tag on collider");
+                    return;
+                }
+
+                // get the color of the fruit and pointsToAdd
+                Renderer fruitRenderer = fruitItem.GetComponent<Renderer>();
+                Color fruitColor = fruitRenderer.material.color;
+                Fruit fruit = fruitItem.GetComponent<Fruit>();
+
+                GameMaster.gameMaster.AddToScore(fruitColor, fruit.pointsToAdd);
+
+                // Increase the size of the snake
+                createNodeAtTail = true;
+
+                // Disable and destroy the fruit gameObject
+                DisablePickupItem(otherCollider.gameObject);
+                    
+
+                // spawn a new fruit
+            }
+
+            if(colliderTag.Equals(Tags.WALL) || colliderTag.Equals(Tags.TAIL))
+            {
+                Debug.Log("Hit a wall or ate the tail");
+                isAlive = false;
+                // Handle Lose Condition in GameMaster
+                // if the score is highest than previous store in file
+            }
+        }
+
         #endregion
 
         #region Custom Methods
+
+        private void InitSnakeNodes()
+        {
+            // get all the rigidbodies for inital 3 nodes
+            nodes = new List<Rigidbody>();
+
+            nodes.Add(transform.GetChild(0).GetComponent<Rigidbody>());
+            nodes.Add(transform.GetChild(1).GetComponent<Rigidbody>());
+            nodes.Add(transform.GetChild(2).GetComponent<Rigidbody>());
+
+        }
 
         private void GetInput()
         {
@@ -67,7 +156,6 @@ namespace Snake3D
 
         private void SetMovement()
         {
-            Debug.Log("Inside SetMovement" + "horizontal: " + horizontal + " vertical: " + vertical);
             if (vertical != 0)
             {
                 SetInputDirection((vertical == 1) ? PlayerDirection.UP : PlayerDirection.DOWN);
@@ -80,7 +168,6 @@ namespace Snake3D
 
         private void SetInputDirection(PlayerDirection _dir)
         {
-            Debug.Log("Inside SetInputDirection: " + "dir: " + (int)_dir + " direction: " + (int)movement.direction);
             if (movement == null)
                 return;
 
@@ -93,6 +180,12 @@ namespace Snake3D
             movement.direction = _dir;
 
             movement.ForceMove();
+        }
+
+        private void DisablePickupItem(GameObject _pickupItem)
+        {
+            _pickupItem.SetActive(false);
+            Destroy(_pickupItem, 3f);
         }
 
         #endregion

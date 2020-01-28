@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Snake3D
 {
@@ -29,7 +27,6 @@ namespace Snake3D
         {
             _horizontal = GetAxisRaw(Axis.Horizontal);
             _vertical = GetAxisRaw(Axis.Vertical);
-            Debug.Log("Inside GetKeyboardInput: " + "horizontal: " + _horizontal + " vertical: " + _vertical);
 
             if (_horizontal != 0)
                 _vertical = 0;

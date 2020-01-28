@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 namespace Snake3D
 {
     public class Tags
@@ -16,7 +15,7 @@ namespace Snake3D
     public class Metrics
     {
         #region Static Variables
-        public static float NODEOFFSET = 0.2f;
+        public static float NODEOFFSET = 1f;
         #endregion
     }
 
