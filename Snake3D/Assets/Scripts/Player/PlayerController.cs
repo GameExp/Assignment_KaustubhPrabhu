@@ -116,17 +116,19 @@ namespace Snake3D
 
                 // Disable and destroy the fruit gameObject
                 DisablePickupItem(otherCollider.gameObject);
-                    
+
 
                 // spawn a new fruit
+                FruitSpawner.spawner.state = FruitSpawner.SpawnState.SPAWN;
             }
 
             if(colliderTag.Equals(Tags.WALL) || colliderTag.Equals(Tags.TAIL))
             {
                 Debug.Log("Hit a wall or ate the tail");
                 isAlive = false;
+
                 // Handle Lose Condition in GameMaster
-                // if the score is highest than previous store in file
+                GameMaster.gameMaster.HandleLoseCondition();
             }
         }
 

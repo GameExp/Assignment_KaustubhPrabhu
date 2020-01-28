@@ -1,0 +1,20 @@
+<pickupitem>
+	<fruits>
+		<color>
+			<red>0.9245283</red>
+			<green>0.3820267</green>
+			<blue>0.3270737</blue>
+			<alpha>1</alpha>
+		</color>
+		<points>100</points>
+	</fruits>
+	<fruits>
+		<color>
+			<red>0.3254902</red>
+			<green>0.3395163</green>
+			<blue>0.9254902</blue>
+			<alpha>1</alpha>
+		</color>
+		<points>200</points>
+	</fruits>
+</pickupitem>

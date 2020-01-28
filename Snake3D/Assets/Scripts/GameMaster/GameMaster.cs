@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Snake3D
@@ -16,7 +15,15 @@ namespace Snake3D
 
         public Color prevFruitColor;
 
+        public Color[] fruitColorList;
+
+        public int[] pointsToAddList;
+
         private int highestScore; // read from file
+
+        public int testHighestScore;
+
+        public int HighestScore { get { return highestScore; } set { highestScore = value; } }
 
         #endregion
 
@@ -36,9 +43,22 @@ namespace Snake3D
                 return;
             }
 
+            // fruits init
+            SaveAndLoadSystem.saveLoad.LoadFruits(SaveAndLoadSystem.saveLoad.XmlRawFile.text, out fruitColorList, out pointsToAddList);
+
+            FruitSpawner.spawner.fruitTypeCount = fruitColorList.Length;
+
+            // player init
+            HighestScore = SaveAndLoadSystem.saveLoad.LoadPlayerScore();
+
             score = 0;
             streak = 1;
             prevFruitColor = Color.white;
+        }
+
+        void Update()
+        {
+            testHighestScore = HighestScore;
         }
 
         #endregion
@@ -58,6 +78,20 @@ namespace Snake3D
             }
 
             score += pointsToAdd * streak;
+            UpdateHighestScore(score);
+        }
+
+        void UpdateHighestScore(int _score)
+        {
+            if (HighestScore < _score)
+                HighestScore = _score;
+        }
+
+        public void HandleLoseCondition()
+        {
+            // if the score is highest than previous store in file
+            UpdateHighestScore(score);
+            SaveAndLoadSystem.saveLoad.SavePlayerScore(HighestScore);
         }
 
         #endregion
