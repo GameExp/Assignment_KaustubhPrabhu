@@ -43,8 +43,6 @@ namespace Snake3D
                 Destroy(gameObject);
                 return;
             }
-
-            
         }
 
         void Start()
@@ -98,6 +96,7 @@ namespace Snake3D
             // if the score is highest than previous store in file
             UpdateHighestScore(score);
             SaveAndLoadSystem.saveLoad.SavePlayerScore(HighestScore);
+            GameUIManager.gameUIManager.LoadGameOverCanvas();
         }
 
         #endregion

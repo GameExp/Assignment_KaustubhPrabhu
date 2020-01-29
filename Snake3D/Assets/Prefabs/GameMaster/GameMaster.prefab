@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7058927651163702243}
   - component: {fileID: 8703996942671366766}
-  - component: {fileID: 2197082508336060106}
   - component: {fileID: 6897841177897108209}
   m_Layer: 0
   m_Name: GameMaster
@@ -50,23 +49,8 @@ MonoBehaviour:
   prevFruitColor: {r: 0, g: 0, b: 0, a: 0}
   fruitColorList: []
   pointsToAddList: 
-  testHighestScore: 0
---- !u!114 &2197082508336060106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3637401554358723449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ef04dd888647764cbfcd9864ce79696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xmlRawFile: {fileID: 4900000, guid: 548ef0debb86ca04f93703eef443996a, type: 3}
-  xmlFruitPathPattern: //pickupitem/fruits
-  xmlScorePathPattern: 
-  highestScorePath: 
+  scoreText: {fileID: 0}
+  maxScoreText: {fileID: 0}
 --- !u!114 &6897841177897108209
 MonoBehaviour:
   m_ObjectHideFlags: 0
