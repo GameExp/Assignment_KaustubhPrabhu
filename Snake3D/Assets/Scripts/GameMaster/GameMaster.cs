@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine.UI;
 using UnityEngine;
 
 namespace Snake3D
@@ -21,7 +21,8 @@ namespace Snake3D
 
         private int highestScore; // read from file
 
-        public int testHighestScore;
+        public Text scoreText;
+        public Text maxScoreText;
 
         public int HighestScore { get { return highestScore; } set { highestScore = value; } }
 
@@ -43,6 +44,11 @@ namespace Snake3D
                 return;
             }
 
+            
+        }
+
+        void Start()
+        {
             // fruits init
             SaveAndLoadSystem.saveLoad.LoadFruits(SaveAndLoadSystem.saveLoad.XmlRawFile.text, out fruitColorList, out pointsToAddList);
 
@@ -50,15 +56,12 @@ namespace Snake3D
 
             // player init
             HighestScore = SaveAndLoadSystem.saveLoad.LoadPlayerScore();
+            maxScoreText.text = HighestScore.ToString();
 
             score = 0;
+            scoreText.text = score.ToString();
             streak = 1;
             prevFruitColor = Color.white;
-        }
-
-        void Update()
-        {
-            testHighestScore = HighestScore;
         }
 
         #endregion
@@ -78,6 +81,7 @@ namespace Snake3D
             }
 
             score += pointsToAdd * streak;
+            scoreText.text = score.ToString();
             UpdateHighestScore(score);
         }
 
@@ -85,6 +89,8 @@ namespace Snake3D
         {
             if (HighestScore < _score)
                 HighestScore = _score;
+
+            maxScoreText.text = HighestScore.ToString();
         }
 
         public void HandleLoseCondition()

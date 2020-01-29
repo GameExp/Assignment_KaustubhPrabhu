@@ -48,7 +48,9 @@ MonoBehaviour:
   score: 0
   streak: 0
   prevFruitColor: {r: 0, g: 0, b: 0, a: 0}
-  fruits: []
+  fruitColorList: []
+  pointsToAddList: 
+  testHighestScore: 0
 --- !u!114 &2197082508336060106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +64,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xmlRawFile: {fileID: 4900000, guid: 548ef0debb86ca04f93703eef443996a, type: 3}
-  xmlPathPattern: //pickupitem/fruits
+  xmlFruitPathPattern: //pickupitem/fruits
+  xmlScorePathPattern: 
+  highestScorePath: 
 --- !u!114 &6897841177897108209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +79,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b6f1abcb3e7024ba5c726e24c1f7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawningFruits: []
+  fruitTypeCount: 0
+  fruitPrefab: {fileID: 1634079144873604817, guid: 1c67224521fec0a42854a25c19661d5c,
+    type: 3}
   state: 0
   range: 4.5
   yPos: 0.276

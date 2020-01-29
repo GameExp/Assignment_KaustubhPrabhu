@@ -14,7 +14,8 @@ namespace Snake3D
         public static SaveAndLoadSystem saveLoad;
         [SerializeField]
         private TextAsset xmlRawFile;
-        public string xmlPathPattern;
+        public string xmlFruitPathPattern;
+        public string xmlScorePathPattern;
 
         public string highestScorePath;
 
@@ -41,6 +42,7 @@ namespace Snake3D
                 return;
             }
 
+            binaryFormatter = new BinaryFormatter();
             highestScorePath = Application.persistentDataPath + "/HighestScore.data";
         }
 
@@ -55,7 +57,7 @@ namespace Snake3D
             xmlDoc.Load(new StringReader(xmlData));
 
             // Get all the nodes for given pattern
-            XmlNodeList nodeList = xmlDoc.SelectNodes(xmlPathPattern);
+            XmlNodeList nodeList = xmlDoc.SelectNodes(xmlFruitPathPattern);
 
             colorList = new Color[nodeList.Count];
             pointsList = new int[nodeList.Count];
@@ -80,6 +82,8 @@ namespace Snake3D
 
                 Color fruitColor = new Color(_red, _green, _blue, _alpha);
 
+                Debug.Log("Color: " + color);
+
                 colorList[i] = fruitColor;
                 pointsList[i] = _points;
 
@@ -90,6 +94,9 @@ namespace Snake3D
 
         public int LoadPlayerScore()
         {
+            //XmlNodeList nodeList = GetXMLNodes(xmlData, xmlScorePathPattern);
+
+
             if(File.Exists(highestScorePath))
             {
                 file = File.Open(highestScorePath, FileMode.Open);
@@ -99,7 +106,9 @@ namespace Snake3D
             }
             else
             {
-                HighestScore hS = new HighestScore(0);
+                HighestScore hS = new HighestScore();
+                hS.highestScore = 0;
+                SavePlayerScore(hS.highestScore);
                 return 0;
             }
         }
@@ -108,24 +117,26 @@ namespace Snake3D
         {
             file = File.Create(highestScorePath);
 
-            HighestScore highestScore = new HighestScore(score);
+            HighestScore highestScore = new HighestScore();
+            highestScore.highestScore = score;      
 
             binaryFormatter.Serialize(file, highestScore);
             file.Close();
         }
 
+        public XmlNodeList GetXMLNodes(string data, string pattern)
+        {
+            // Create and load xml document
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(new StringReader(data));
+
+            // Get all the nodes for given pattern
+            XmlNodeList nodeList = xmlDoc.SelectNodes(pattern);
+
+            return nodeList;
+        }
+
         #endregion
 
-    }
-
-    [System.Serializable]
-    public class HighestScore
-    {
-        public int highestScore;
-
-        public HighestScore(int _score)
-        {
-            highestScore = _score;
-        }
     }
 }
