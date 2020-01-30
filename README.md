@@ -7,6 +7,8 @@ Snake 3D
 
 Sanke 3D is a 3D snake game in which player's goal is to achieve maximum score as player can to beat all time max score.
 
+Video link to YouTube: https://youtu.be/uzEk3RkFHLE
+
 
 ## Controls
 
