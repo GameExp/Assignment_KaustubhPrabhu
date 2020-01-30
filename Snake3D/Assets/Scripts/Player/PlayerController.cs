@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Snake3D
@@ -104,6 +105,10 @@ namespace Snake3D
                     return;
                 }
 
+                // play fruit pick up SFX
+                AudioManager.audioManager.CollectFruitSFX();
+
+
                 // get the color of the fruit and pointsToAdd
                 Renderer fruitRenderer = fruitItem.GetComponent<Renderer>();
                 Color fruitColor = fruitRenderer.material.color;
@@ -119,16 +124,30 @@ namespace Snake3D
 
 
                 // spawn a new fruit
-                FruitSpawner.spawner.state = FruitSpawner.SpawnState.SPAWN;
+                FruitSpawner.fruitSpawner.state = FruitSpawner.SpawnState.SPAWN;
             }
 
             if(colliderTag.Equals(Tags.WALL) || colliderTag.Equals(Tags.TAIL))
             {
-                Debug.Log("Hit a wall or ate the tail");
+                AudioManager.audioManager.CollideWithWallSFX();
                 isAlive = false;
-
-                // Handle Lose Condition in GameMaster
                 GameMaster.gameMaster.HandleLoseCondition();
+            }
+
+            if(colliderTag.Equals(Tags.BOMB))
+            {
+                otherCollider.gameObject.SetActive(false);
+                AudioManager.audioManager.CollectBombSFX();
+                isAlive = false;
+                GameMaster.gameMaster.HandleLoseCondition();
+            }
+
+            if(colliderTag.Equals(Tags.INSVERSE))
+            {
+                otherCollider.gameObject.SetActive(false);
+                AudioManager.audioManager.CollectBombSFX();
+
+                InverseControls();
             }
         }
 
@@ -188,6 +207,20 @@ namespace Snake3D
         {
             _pickupItem.SetActive(false);
             Destroy(_pickupItem, 3f);
+        }
+
+        void InverseControls()
+        {
+            Debug.Log("Reverse the controls");
+            inputManager.inverseControls = -1;
+
+            StartCoroutine("WaitAndChange");
+        }
+
+        IEnumerator WaitAndChange()
+        {
+            yield return new WaitForSeconds(inputManager.inverseControlsForTime);
+            inputManager.inverseControls = 1;
         }
 
         #endregion

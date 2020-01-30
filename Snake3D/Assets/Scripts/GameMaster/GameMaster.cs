@@ -50,7 +50,7 @@ namespace Snake3D
             // fruits init
             SaveAndLoadSystem.saveLoad.LoadFruits(SaveAndLoadSystem.saveLoad.XmlRawFile.text, out fruitColorList, out pointsToAddList);
 
-            FruitSpawner.spawner.fruitTypeCount = fruitColorList.Length;
+            FruitSpawner.fruitSpawner.fruitTypeCount = fruitColorList.Length;
 
             // player init
             HighestScore = SaveAndLoadSystem.saveLoad.LoadPlayerScore();
@@ -81,6 +81,7 @@ namespace Snake3D
             score += pointsToAdd * streak;
             scoreText.text = score.ToString();
             UpdateHighestScore(score);
+            GameUIManager.gameUIManager.fadingScoreValueText.enabled = true;
         }
 
         void UpdateHighestScore(int _score)
@@ -97,6 +98,11 @@ namespace Snake3D
             UpdateHighestScore(score);
             SaveAndLoadSystem.saveLoad.SavePlayerScore(HighestScore);
             GameUIManager.gameUIManager.LoadGameOverCanvas();
+        }
+
+        public void ResetGameMaster()
+        {
+            Destroy(this.gameObject);
         }
 
         #endregion

@@ -15,15 +15,19 @@ namespace Snake3D
 
         #region Variables
 
-        public static FruitSpawner spawner;
+        public static FruitSpawner fruitSpawner;
 
         public int fruitTypeCount;
         public GameObject fruitPrefab;
         
         public SpawnState state = SpawnState.SPAWN;
 
-        public float range = 4.5f;
+        public float posRange = 4.5f;
         public float yPos = 0.276f;
+
+        private Vector3 spawnPos = new Vector3();
+
+        public Vector3 SpawnPos { get { return spawnPos; } }
 
         #endregion
 
@@ -32,12 +36,12 @@ namespace Snake3D
         void Awake()
         {
             // implement singlton
-            if (spawner == null)
+            if (fruitSpawner == null)
             {
                 DontDestroyOnLoad(this);
-                spawner = this;
+                fruitSpawner = this;
             }
-            else if (spawner != this)
+            else if (fruitSpawner != this)
             {
                 Destroy(gameObject);
                 return;
@@ -63,10 +67,10 @@ namespace Snake3D
         {
             Debug.Log("Spawning Fruit" + spawnFruitIndex);
 
-            Vector3 spawnPos = new Vector3();
-            spawnPos.x = Random.Range(-range, range);
+            
+            spawnPos.x = Random.Range(-posRange, posRange);
             spawnPos.y = yPos;
-            spawnPos.z = Random.Range(-range, range);
+            spawnPos.z = Random.Range(-posRange, posRange);
 
             Instantiate(fruitPrefab, spawnPos, Quaternion.identity, transform);
             fruitPrefab.GetComponent<Renderer>().sharedMaterial.color = GameMaster.gameMaster.fruitColorList[spawnFruitIndex];

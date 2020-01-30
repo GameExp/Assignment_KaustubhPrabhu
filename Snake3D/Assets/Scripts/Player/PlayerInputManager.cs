@@ -6,6 +6,10 @@ namespace Snake3D
     {
 
         #region Variables
+
+        public int inverseControls = 1;
+        public float inverseControlsForTime = 5f;
+
         #endregion
 
         #region Enums
@@ -41,12 +45,12 @@ namespace Snake3D
 
                 if(left)
                 {
-                    return -1;
+                    return -1 * inverseControls;
                 }
 
                 if(right)
                 {
-                    return 1;
+                    return 1 * inverseControls;
                 }
 
                 return 0;
@@ -58,12 +62,12 @@ namespace Snake3D
 
                 if(up)
                 {
-                    return 1;
+                    return 1 * inverseControls;
                 }
 
                 if(down)
                 {
-                    return -1;
+                    return -1 * inverseControls;
                 }
 
                 return 0;
