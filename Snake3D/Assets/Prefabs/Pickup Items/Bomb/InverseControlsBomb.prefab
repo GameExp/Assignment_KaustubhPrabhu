@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6475817674844370374}
   - component: {fileID: 3142700538501844580}
   - component: {fileID: 2801769694152626856}
-  - component: {fileID: 1837939698894221685}
   m_Layer: 0
   m_Name: InverseControlsBomb
   m_TagString: Inverse
@@ -94,17 +93,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.515
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1837939698894221685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7258663264875986810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05758bc4122ff2449b75960d9d39a90c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fruitColor: {r: 0, g: 0, b: 0, a: 0}
-  pointsToAdd: 20

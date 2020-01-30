@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Snake3D
 {
@@ -11,14 +9,21 @@ namespace Snake3D
 
         public static BombSpawner bombSpawner;
 
-        public GameObject[] bombPrefabs;
+        [SerializeField]
+        private GameObject[] bombPrefabs = null;
 
-        public float bombSelfDestroyTime;
-        public float bombSpawnWaitTime;
+        [Header("Spawn Time Attributes")]
+        [SerializeField]
+        private float bombSelfDestroyTime = 5f;
+        [SerializeField]
+        private float bombSpawnWaitTime = 8f;
         private float bombSpawnCountDown;
 
-        public float posRange = 4.5f;
-        public float yPos = 0.276f;
+        [Header("Position Offset")]
+        [SerializeField]
+        private float posRange = 4.5f;
+        [SerializeField]
+        private float yPos = 0.276f;
 
         #endregion
 

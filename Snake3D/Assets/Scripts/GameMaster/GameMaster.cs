@@ -10,21 +10,26 @@ namespace Snake3D
 
         public static GameMaster gameMaster;
 
-        public int score;
-        public int streak;
-
-        public Color prevFruitColor;
-
-        public Color[] fruitColorList;
-
-        public int[] pointsToAddList;
-
-        private int highestScore; // read from file
-
+        [Header("UI")]
         public Text scoreText;
         public Text maxScoreText;
 
+        // colors and points fetched from file for fruits
+        [Header("Data from xml")]
+        public Color[] fruitColorList;
+        public int[] pointsToAddList;
+
+        private int highestScore; // read from file
+        private int score;
+        private int streak;
+        private Color prevFruitColor;
+
+        #endregion
+
+        #region Properties
+
         public int HighestScore { get { return highestScore; } set { highestScore = value; } }
+        public int Streak { get => streak; set => streak = value; }
 
         #endregion
 
@@ -49,8 +54,7 @@ namespace Snake3D
         {
             // fruits init
             SaveAndLoadSystem.saveLoad.LoadFruits(SaveAndLoadSystem.saveLoad.XmlRawFile.text, out fruitColorList, out pointsToAddList);
-
-            FruitSpawner.fruitSpawner.fruitTypeCount = fruitColorList.Length;
+            FruitSpawner.fruitSpawner.FruitTypeCount = fruitColorList.Length;
 
             // player init
             HighestScore = SaveAndLoadSystem.saveLoad.LoadPlayerScore();
@@ -58,7 +62,7 @@ namespace Snake3D
 
             score = 0;
             scoreText.text = score.ToString();
-            streak = 1;
+            Streak = 1;
             prevFruitColor = Color.white;
         }
 
@@ -68,17 +72,19 @@ namespace Snake3D
 
         public void AddToScore(Color _fruitColor, int pointsToAdd)
         {
+            // update streak
             if(prevFruitColor == _fruitColor)
             {
-                streak++;
+                Streak++;
             }
             else if(prevFruitColor != _fruitColor)
             {
                 prevFruitColor = _fruitColor;
-                streak = 1;
+                Streak = 1;
             }
 
-            score += pointsToAdd * streak;
+            // add score
+            score += pointsToAdd * Streak;
             scoreText.text = score.ToString();
             UpdateHighestScore(score);
             GameUIManager.gameUIManager.fadingScoreValueText.enabled = true;
@@ -103,6 +109,7 @@ namespace Snake3D
         public void ResetGameMaster()
         {
             Destroy(this.gameObject);
+            return;
         }
 
         #endregion

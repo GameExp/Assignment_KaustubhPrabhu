@@ -12,17 +12,17 @@ namespace Snake3D
 
         #region Variables
 
-        [Header("Movement")]
-        private int horizontal = 0;
-        private int vertical = 0;
-
         // Growth increase
         [SerializeField]
-        private GameObject tailPrefab;
-        private bool createNodeAtTail;
+        private GameObject tailPrefab = null;
 
-        public static List<Rigidbody> nodes;
-        public bool isAlive;
+        private bool createNodeAtTail;
+        private static List<Rigidbody> nodes;
+        private bool isAlive;
+
+        // player input
+        private int horizontal = 0;
+        private int vertical = 0;
 
         #endregion
 
@@ -31,6 +31,12 @@ namespace Snake3D
         private PlayerMovementHandler movement;
         private PlayerInputManager inputManager;
         private PlayerBodyGrowthOperator body;
+
+        #endregion
+
+        #region Properties
+
+        public static List<Rigidbody> Nodes { get => nodes; set => nodes = value; }
 
         #endregion
 
@@ -63,7 +69,7 @@ namespace Snake3D
             GetInput();
 
 
-            // check if we eaten a food and create a new node
+            // check if we eaten a fruit and if yes then create a new node
             if (createNodeAtTail)
             {
                 createNodeAtTail = false;
@@ -73,8 +79,8 @@ namespace Snake3D
                 // add a new tail to the snake
                 List<Rigidbody> tempNodes = new List<Rigidbody>();
 
-                tempNodes = body.AddTail(tailPrefab, nodes);
-                nodes = tempNodes;
+                tempNodes = body.AddTail(tailPrefab, Nodes);
+                Nodes = tempNodes;
 
             }
         }
@@ -96,25 +102,22 @@ namespace Snake3D
 
             if(colliderTag.Equals(Tags.FRUIT))
             {
-                Debug.Log("Ate a fruit");
-
                 GameObject fruitItem = otherCollider.gameObject;
                 if(fruitItem == null)
                 {
-                    Debug.LogError("Wrong assignment of FRUIT Tag on collider");
+                    Debug.Log("Wrong assignment of FRUIT Tag on collider");
                     return;
                 }
 
                 // play fruit pick up SFX
                 AudioManager.audioManager.CollectFruitSFX();
 
-
                 // get the color of the fruit and pointsToAdd
                 Renderer fruitRenderer = fruitItem.GetComponent<Renderer>();
                 Color fruitColor = fruitRenderer.material.color;
                 Fruit fruit = fruitItem.GetComponent<Fruit>();
 
-                GameMaster.gameMaster.AddToScore(fruitColor, fruit.pointsToAdd);
+                GameMaster.gameMaster.AddToScore(fruitColor, fruit.PointsToAdd);
 
                 // Increase the size of the snake
                 createNodeAtTail = true;
@@ -158,11 +161,11 @@ namespace Snake3D
         private void InitSnakeNodes()
         {
             // get all the rigidbodies for inital 3 nodes
-            nodes = new List<Rigidbody>();
+            Nodes = new List<Rigidbody>();
 
-            nodes.Add(transform.GetChild(0).GetComponent<Rigidbody>());
-            nodes.Add(transform.GetChild(1).GetComponent<Rigidbody>());
-            nodes.Add(transform.GetChild(2).GetComponent<Rigidbody>());
+            Nodes.Add(transform.GetChild(0).GetComponent<Rigidbody>());
+            Nodes.Add(transform.GetChild(1).GetComponent<Rigidbody>());
+            Nodes.Add(transform.GetChild(2).GetComponent<Rigidbody>());
 
         }
 
@@ -192,13 +195,13 @@ namespace Snake3D
             if (movement == null)
                 return;
 
-            if (_dir == PlayerDirection.LEFT && movement.direction == PlayerDirection.RIGHT ||
-                _dir == PlayerDirection.UP && movement.direction == PlayerDirection.DOWN ||
-                _dir == PlayerDirection.RIGHT && movement.direction == PlayerDirection.LEFT ||
-                _dir == PlayerDirection.DOWN && movement.direction == PlayerDirection.UP)
+            if (_dir == PlayerDirection.LEFT && movement.Direction == PlayerDirection.RIGHT ||
+                _dir == PlayerDirection.UP && movement.Direction == PlayerDirection.DOWN ||
+                _dir == PlayerDirection.RIGHT && movement.Direction == PlayerDirection.LEFT ||
+                _dir == PlayerDirection.DOWN && movement.Direction == PlayerDirection.UP)
                 return;
 
-            movement.direction = _dir;
+            movement.Direction = _dir;
 
             movement.ForceMove();
         }
@@ -212,7 +215,7 @@ namespace Snake3D
         void InverseControls()
         {
             Debug.Log("Reverse the controls");
-            inputManager.inverseControls = -1;
+            inputManager.InverseControls = -1;
 
             StartCoroutine("WaitAndChange");
         }
@@ -220,7 +223,7 @@ namespace Snake3D
         IEnumerator WaitAndChange()
         {
             yield return new WaitForSeconds(inputManager.inverseControlsForTime);
-            inputManager.inverseControls = 1;
+            inputManager.InverseControls = 1;
         }
 
         #endregion

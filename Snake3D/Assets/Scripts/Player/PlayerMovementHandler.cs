@@ -8,9 +8,12 @@ namespace Snake3D
 
         #region Variables
 
-        public PlayerDirection direction;
-        public float stepLength = 0.2f;
-        public float moveFrequency = 0.1f;
+        // direction, distance, freq at which to move
+        private PlayerDirection direction;
+        [SerializeField]
+        private float stepLength = 0.2f;
+        [SerializeField]
+        private float moveFrequency = 0.1f;
 
         private float countDown;
         private List<Vector3> deltaPositions;
@@ -18,6 +21,12 @@ namespace Snake3D
         // rigidbodies
         private Rigidbody mainBody;
         private Rigidbody headBody;
+
+        #endregion
+
+        #region Properties
+
+        public PlayerDirection Direction { get => direction; set => direction = value; }
 
         #endregion
 
@@ -34,14 +43,14 @@ namespace Snake3D
 
         public void InitPlayer()
         {
-            List<Rigidbody> _nodes = PlayerController.nodes;
+            List<Rigidbody> _nodes = PlayerController.Nodes;
             mainBody = GetComponent<Rigidbody>();
             headBody = _nodes[0];
 
             // set a random intial direction
             SetRandomDirection();
             // based on the direction change the position of 2 tailing objects respectively
-            switch (direction)
+            switch (Direction)
             {
                 case PlayerDirection.LEFT:
 
@@ -76,7 +85,7 @@ namespace Snake3D
         private void SetRandomDirection()
         {
             int randomDir = Random.Range(0, (int)PlayerDirection.COUNT);
-            direction = (PlayerDirection)randomDir;
+            Direction = (PlayerDirection)randomDir;
         }
 
         private void SetDeltaPositions()
@@ -99,14 +108,14 @@ namespace Snake3D
             if (countDown >= moveFrequency)
             {
                 countDown = 0f;
-                Move(PlayerController.nodes);
+                Move(PlayerController.Nodes);
             }
         }
 
         private void Move(List<Rigidbody> _nodes)
         {
             // get the delta position Vector3 to move by in this call
-            Vector3 dPos = deltaPositions[(int)direction];
+            Vector3 dPos = deltaPositions[(int)Direction];
             Vector3 parentPos = headBody.position;
             Vector3 prevPos;
 
@@ -126,7 +135,7 @@ namespace Snake3D
         public void ForceMove()
         {
             countDown = 0f;
-            Move(PlayerController.nodes);
+            Move(PlayerController.Nodes);
         }
 
         #endregion

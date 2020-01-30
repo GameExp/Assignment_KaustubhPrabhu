@@ -7,8 +7,14 @@ namespace Snake3D
 
         #region Variables
 
-        public int inverseControls = 1;
         public float inverseControlsForTime = 5f;
+        private int inverseControls = 1;
+
+        #endregion
+
+        #region Properties
+
+        public int InverseControls { get => inverseControls; set => inverseControls = value; }
 
         #endregion
 
@@ -20,9 +26,6 @@ namespace Snake3D
             Vertical
         }
 
-        #endregion
-
-        #region Builtin Methods
         #endregion
 
         #region Custom Methods
@@ -45,12 +48,12 @@ namespace Snake3D
 
                 if(left)
                 {
-                    return -1 * inverseControls;
+                    return -1 * InverseControls;
                 }
 
                 if(right)
                 {
-                    return 1 * inverseControls;
+                    return 1 * InverseControls;
                 }
 
                 return 0;
@@ -62,12 +65,12 @@ namespace Snake3D
 
                 if(up)
                 {
-                    return 1 * inverseControls;
+                    return 1 * InverseControls;
                 }
 
                 if(down)
                 {
-                    return -1 * inverseControls;
+                    return -1 * InverseControls;
                 }
 
                 return 0;

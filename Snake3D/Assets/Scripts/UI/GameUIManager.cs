@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -12,14 +10,15 @@ namespace Snake3D
         #region Variables
 
         public static GameUIManager gameUIManager;
+
         public GameObject gameOverCanvas;
         public Text maxScoreValueText;
-
         public Text fadingScoreValueText;
 
         private Vector3 initialPosition;
         private float alphaValue = 1f;
         private float moveSpeed = 2f;
+        private int mainMenuIndex = 0;
 
         #endregion
 
@@ -47,9 +46,10 @@ namespace Snake3D
 
         public void UpdateScoreBoard()
         {
+            // fading and moving effect of Score
             if (fadingScoreValueText.enabled)
             {
-                fadingScoreValueText.text = " X " + GameMaster.gameMaster.streak.ToString() + " STREAK";
+                fadingScoreValueText.text = " X " + GameMaster.gameMaster.Streak.ToString() + " STREAK";
                 if (alphaValue <= 0.0f)
                 {
                     fadingScoreValueText.enabled = false;
@@ -81,7 +81,7 @@ namespace Snake3D
         public void LoadMainMenu()
         {
             GameMaster.gameMaster.ResetGameMaster();
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(mainMenuIndex);
         }
 
         #endregion

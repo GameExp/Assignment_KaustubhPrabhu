@@ -14,13 +14,11 @@ namespace Snake3D
         public static SaveAndLoadSystem saveLoad;
         [SerializeField]
         private TextAsset xmlRawFile;
-        public string xmlFruitPathPattern;
-        public string xmlScorePathPattern;
 
-        public string highestScorePath;
-
-        public BinaryFormatter binaryFormatter;
-        public FileStream file;
+        private string xmlFruitPathPattern = "//pickupitem/fruits";
+        private string highestScorePath;
+        private BinaryFormatter binaryFormatter;
+        private FileStream file;
 
         public TextAsset XmlRawFile { get { return xmlRawFile; } set { xmlRawFile = value; } }
 
@@ -86,18 +84,12 @@ namespace Snake3D
 
                 colorList[i] = fruitColor;
                 pointsList[i] = _points;
-
-                /*Debug.Log("Fruit is: " +"red: " + _red + " green: " + _green 
-                                                                 + " blue: " + _blue + " alpha: " + _alpha + " points: " + _points);*/
             }
         }
 
         public int LoadPlayerScore()
         {
-            //XmlNodeList nodeList = GetXMLNodes(xmlData, xmlScorePathPattern);
-
-
-            if(File.Exists(highestScorePath))
+            if (File.Exists(highestScorePath))
             {
                 file = File.Open(highestScorePath, FileMode.Open);
                 HighestScore highestScore = binaryFormatter.Deserialize(file) as HighestScore;

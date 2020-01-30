@@ -6,12 +6,6 @@ namespace Snake3D
     public class PlayerBodyGrowthOperator : MonoBehaviour
     {
 
-        #region Variables
-        #endregion
-
-        #region Builtin Methods
-        #endregion
-
         #region Custom Methods
 
         public List<Rigidbody> AddTail(GameObject _tailPrefab, List<Rigidbody> _nodes)

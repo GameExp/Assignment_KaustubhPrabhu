@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1987002630149600890}
   - component: {fileID: 7552160411896576154}
   m_Layer: 0
-  m_Name: Particle System (1)
+  m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108992516694690300}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.009, z: -0.001}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.291, z: -0.001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8436200756352398063}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &1987002630149600890
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -284,8 +284,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.07
-      minScalar: 0.15
+      scalar: 0.2
+      minScalar: 0.07
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -659,7 +659,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 4
     angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -746,7 +746,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.17
+      value: 0.25
       mode: 0
       spread: 0
       speed:
@@ -4861,5 +4861,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05758bc4122ff2449b75960d9d39a90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitColor: {r: 0, g: 0, b: 0, a: 0}
-  pointsToAdd: 20
+  fruitColor: {r: 0.3254902, g: 0.3395163, b: 0.9254902, a: 1}
+  pointsToAdd: 200

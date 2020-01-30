@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bombPrefabs:
-  - {fileID: 1634079144873604817, guid: b22199968e304724796c1fd68b1d4b93, type: 3}
+  - {fileID: 8078673278434630517, guid: b22199968e304724796c1fd68b1d4b93, type: 3}
   bombSelfDestroyTime: 5
   bombSpawnWaitTime: 8
   posRange: 4.5
