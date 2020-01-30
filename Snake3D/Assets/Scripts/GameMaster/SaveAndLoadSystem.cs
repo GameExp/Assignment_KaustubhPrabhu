@@ -80,8 +80,6 @@ namespace Snake3D
 
                 Color fruitColor = new Color(_red, _green, _blue, _alpha);
 
-                Debug.Log("Color: " + color);
-
                 colorList[i] = fruitColor;
                 pointsList[i] = _points;
             }

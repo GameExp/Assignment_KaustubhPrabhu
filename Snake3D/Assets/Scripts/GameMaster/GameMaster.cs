@@ -20,7 +20,7 @@ namespace Snake3D
         public int[] pointsToAddList;
 
         private int highestScore; // read from file
-        private int score;
+        public int score;
         private int streak;
         private Color prevFruitColor;
 

@@ -73,8 +73,6 @@ namespace Snake3D
 
         private void SpawnFruit(int spawnFruitIndex)
         {
-            Debug.Log("Spawning Fruit" + spawnFruitIndex);
-
             // get a random position to spawn within range
             spawnPos.x = Random.Range(-PosRange, PosRange);
             spawnPos.y = YPos;
@@ -84,7 +82,7 @@ namespace Snake3D
             Instantiate(fruitPrefab, spawnPos, Quaternion.identity, transform);
             fruitPrefab.GetComponent<Renderer>().sharedMaterial.color = GameMaster.gameMaster.fruitColorList[spawnFruitIndex];
             fruitPrefab.GetComponent<Fruit>().FruitColor = GameMaster.gameMaster.fruitColorList[spawnFruitIndex];
-            fruitPrefab.GetComponent<Fruit>().PointsToAdd = GameMaster.gameMaster.pointsToAddList[spawnFruitIndex];
+            fruitPrefab.GetComponent<Fruit>().pointsToAdd = GameMaster.gameMaster.pointsToAddList[spawnFruitIndex];
         }
 
         #endregion

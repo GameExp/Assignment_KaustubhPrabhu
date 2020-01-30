@@ -8,14 +8,13 @@ namespace Snake3D
         #region Variables
 
         private Color fruitColor;
-        private int pointsToAdd;
+        public int pointsToAdd;
 
         #endregion
 
         #region Properties
 
         public Color FruitColor { get => fruitColor; set => fruitColor = value; }
-        public int PointsToAdd { get => pointsToAdd; set => pointsToAdd = value; }
 
         #endregion
 
@@ -24,7 +23,7 @@ namespace Snake3D
         public void InitFruit(Color _fruitColor, int _pointsToAdd)
         {
             FruitColor = _fruitColor;
-            PointsToAdd = _pointsToAdd;
+            pointsToAdd = _pointsToAdd;
         }
 
         #endregion

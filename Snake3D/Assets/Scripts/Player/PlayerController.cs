@@ -105,7 +105,6 @@ namespace Snake3D
                 GameObject fruitItem = otherCollider.gameObject;
                 if(fruitItem == null)
                 {
-                    Debug.Log("Wrong assignment of FRUIT Tag on collider");
                     return;
                 }
 
@@ -117,7 +116,7 @@ namespace Snake3D
                 Color fruitColor = fruitRenderer.material.color;
                 Fruit fruit = fruitItem.GetComponent<Fruit>();
 
-                GameMaster.gameMaster.AddToScore(fruitColor, fruit.PointsToAdd);
+                GameMaster.gameMaster.AddToScore(fruitColor, fruit.pointsToAdd);
 
                 // Increase the size of the snake
                 createNodeAtTail = true;
@@ -214,7 +213,6 @@ namespace Snake3D
 
         void InverseControls()
         {
-            Debug.Log("Reverse the controls");
             inputManager.InverseControls = -1;
 
             StartCoroutine("WaitAndChange");
